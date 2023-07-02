@@ -1,0 +1,5 @@
+list containers:
+
+docker ps
+
+docker network ls
