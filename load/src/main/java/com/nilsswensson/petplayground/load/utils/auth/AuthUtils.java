@@ -3,7 +3,6 @@ package com.nilsswensson.petplayground.load.utils.auth;
 import com.nilsswensson.petplayground.common.auth.AuthenticationRequest;
 import com.nilsswensson.petplayground.common.auth.AuthenticationResponse;
 import com.nilsswensson.petplayground.load.utils.WebUtils;
-import com.nilsswensson.petplayground.load.utils.auth.model.TokenHolder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.util.MultiValueMap;
@@ -76,16 +75,42 @@ public class AuthUtils {
         return res;
     }
 
-    public static AuthenticationResponse token(final String uri, final Object json, final String referer) {
+    public static AuthenticationResponse register(final Object json) {
         return AUTH_CLIENT.post()
-                .uri(uri)
-                .header("Origin", "http://localhost:9093")
-                .header("Referer", referer)
+                .uri("/register")
+                .header("Origin", "http://localhost:9094")
+                .header("Referer", "")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(json)
                 .accept(MediaType.ALL)
                 .retrieve()
                 .bodyToMono(AuthenticationResponse.class)
+                .block();
+    }
+
+    public static AuthenticationResponse authenticate(final Object json) {
+        return AUTH_CLIENT.post()
+                .uri("/authenticate")
+                .header("Origin", "http://localhost:9094")
+                .header("Referer", "")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(json)
+                .accept(MediaType.ALL)
+                .retrieve()
+                .bodyToMono(AuthenticationResponse.class)
+                .block();
+    }
+
+    public static String whoami(final String uri, final Object json) {
+        return AUTH_CLIENT.post()
+                .uri(uri)
+                .header("Origin", "http://localhost:9094/")
+                .header("Referer", "")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(json)
+                .accept(MediaType.ALL)
+                .retrieve()
+                .bodyToMono(String.class)
                 .block();
     }
 

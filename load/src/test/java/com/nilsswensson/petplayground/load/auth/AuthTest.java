@@ -26,8 +26,7 @@ public class AuthTest {
                 .role(Role.ADMIN)
                 .build();
 
-        final AuthenticationResponse response =
-                AuthUtils.token("/register", admin, "");
+        final AuthenticationResponse response = AuthUtils.register(admin);
 
         System.out.println(response.getAccessToken());
 
