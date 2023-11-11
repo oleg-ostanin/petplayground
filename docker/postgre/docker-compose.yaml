@@ -11,7 +11,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./postgres-data-pet:/var/lib/postgresql/data
+      - ./postgres-pet-data:/var/lib/postgresql/data
   grafana:
     build: './config/grafana'
     ports:
@@ -40,3 +40,6 @@ services:
           - prometheus
 networks:
   monitoring:
+
+volumes:
+  postgres-pet-data:

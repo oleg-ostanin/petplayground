@@ -25,7 +25,7 @@ public class BookService {
         final List<Book> allBooks = bookUtils.getAllBooks();
 
         for(Book book : allBooks) {
-            //WebUtils.post(authenticationResponse, "/add-book", book);
+            WebUtils.post(authenticationResponse, "/add-book", book);
         }
     }
 }
