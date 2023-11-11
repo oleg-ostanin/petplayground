@@ -1,3 +1,5 @@
 rootProject.name = 'petplayground'
 include 'facade'
+include 'load'
+include 'common'
 

@@ -23,22 +23,61 @@ repositories {
 }
 
 dependencies {
-//    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework:springdoc-openapi-starter-webmvc-ui:2.1.0'
-//    implementation 'org.postgresql:r2dbc-postgresql'
-    implementation 'org.postgresql:postgresql'
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    implementation project(':common')
+
+    implementation (enforcedPlatform(libs.spring.boot.bom)) {
+        exclude(group: "org.jooq", module: "jooq")
+        exclude(group: "org.apache.kafka", module: "kafka-clients")
+    }
+
+    implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.security)
+    implementation(libs.spring.boot.starter.validation)
+    implementation(libs.spring.boot.starter.data.jpa)
+
+    implementation(libs.sentry.spring.boot.starter)
+    implementation(libs.sentry.logback)
+
+    // SQL
+    implementation(libs.liquibase)
+    runtimeOnly(libs.postgresql)
+
+    // Micrometer
+    implementation(libs.micrometer.registry.prometheus)
+    implementation(libs.micrometer.core)
+
+    developmentOnly(libs.spring.boot.devtools)
+    annotationProcessor(libs.spring.boot.configuration.processor)
+
+    // Feign
+    implementation(libs.feign.jackson)
+    implementation(libs.feign.okhttp)
+    implementation(libs.feign.micrometer)
+
+    // JWT
+    implementation(libs.jjwt.impl)
+    runtimeOnly(libs.jjwt.jackson)
+
+    // Open API
+    implementation(libs.springdoc.openapi.ui)
+
+    // Test
+    compileOnly(libs.lombok)
+    testCompileOnly(libs.lombok)
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.wiremock)
+    testImplementation(libs.testcontainers.junit.jupiter)
+    testImplementation(libs.testcontainers.postgresql)
+    testImplementation(libs.testcontainers.testcontainers)
+
+    // ASSERTJ
+    testImplementation(libs.assertj)
+
     implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.9'
     implementation 'io.swagger.core.v3:swagger-core-jakarta:2.2.9'
     implementation 'io.swagger.core.v3:swagger-models-jakarta:2.2.9'
 
-
-    implementation 'org.projectlombok:lombok:1.18.26'
     compileOnly 'org.projectlombok:lombok'
 
     // SLF4J API
@@ -49,14 +88,8 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-//    testImplementation 'io.projectreactor:reactor-test'
-    testImplementation 'org.testcontainers:junit-jupiter'
-//    testImplementation 'org.testcontainers:r2dbc'
-    testImplementation 'org.testcontainers:postgresql:1.16.0'
-
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 apply plugin: "io.spring.dependency-management"

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id = "add-user-table" author="o.ostanin">
+        <comment>add user table</comment>
+        <sql>
+            <![CDATA[
+            CREATE TABLE IF NOT EXISTS user_info (
+                id BIGSERIAL PRIMARY KEY,
+                first_name TEXT CHECK (char_length(first_name) <= 64),
+                last_name TEXT CHECK (char_length(last_name) <= 64),
+                role_name TEXT CHECK (char_length(last_name) <= 64),
+                email TEXT CHECK (char_length(email) <= 64),
+                password TEXT CHECK (char_length(password) <= 512)
+                );
+            ]]>
+        </sql>
+        <rollback>
+            DROP table user_info;
+        </rollback>
+    </changeSet>
+
+    <changeSet id = "add-token-table" author="o.ostanin">
+        <comment>add token table</comment>
+        <sql>
+            <![CDATA[
+            CREATE TABLE IF NOT EXISTS token (
+                id BIGSERIAL PRIMARY KEY,
+                expired BOOLEAN NOT NULL,
+                revoked BOOLEAN NOT NULL,
+                user_id BIGINT,
+                token TEXT CHECK (char_length(token) <= 255) UNIQUE,
+                token_type TEXT CHECK (char_length(token_type) <= 255),
+                CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user_info(id)
+--                 CONSTRAINT token_token_type_check CHECK ((token_type)::text = 'BEARER'::text)
+                );
+            ]]>
+        </sql>
+        <rollback>
+            DROP table token;
+        </rollback>
+    </changeSet>
+
+
+</databaseChangeLog>

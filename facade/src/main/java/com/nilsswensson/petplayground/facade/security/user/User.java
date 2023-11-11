@@ -1,13 +1,8 @@
 package com.nilsswensson.petplayground.facade.security.user;
 
 import com.nilsswensson.petplayground.facade.security.token.Token;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -22,18 +17,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_user")
+@Table(name = "user_info")
 public class User implements UserDetails {
 
   @Id
-  @GeneratedValue
-  private Integer id;
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_info_id_seq")
+  @SequenceGenerator(name = "user_info_id_seq", sequenceName = "user_info_id_seq", allocationSize = 1)
+  private Long id;
+  @Column(name = "first_name")
   private String firstname;
+  @Column(name = "last_name")
   private String lastname;
   private String email;
   private String password;
 
   @Enumerated(EnumType.STRING)
+  @Column(name = "role_name")
   private Role role;
 
   @OneToMany(mappedBy = "user")

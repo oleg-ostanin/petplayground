@@ -1,5 +1,6 @@
 package com.nilsswensson.petplayground.facade.security.demo;
 
+import com.nilsswensson.petplayground.common.model.Book;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,11 @@ public class DemoController {
   @GetMapping
   public ResponseEntity<String> sayHello() {
     return ResponseEntity.ok("Hello from secured endpoint");
+  }
+
+  @GetMapping("/book")
+  public ResponseEntity<Book> book() {
+    return ResponseEntity.ok(Book.builder().title("name").build());
   }
 
 }

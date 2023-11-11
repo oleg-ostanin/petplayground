@@ -1,7 +1,13 @@
+server:
+  port : 9093
+
 spring:
+  liquibase:
+    change-log: classpath:liquibase/changelog.xml
+    enabled: ${LIQUIBASE_MIGRATION:true}
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgre
-    username: postgre
+    url: jdbc:postgresql://localhost:5432/playground
+    username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -14,6 +20,45 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+management:
+  custom:
+    enable: true
+  health:
+    defaults:
+      enabled: false
+    check-timeout:
+      internal: 1000
+      external: 2000
+    taskExecutor:
+      threadKeepAliveSeconds: ${HEALTH_CHECK_EXEC_THREAD_TTL:600}
+      shutdownTimeout: ${HEALTH_CHECK_EXEC_SHUTDOWN_TIMEOUT:60}
+  info:
+    env:
+      enabled: true
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: 'health,external-health,info,prometheus,loggers,env,beans,mappings,timelimiters'
+      path-mapping:
+        'health': 'health/check'
+        'external-health': 'health/check/external'
+        'metrics': 'metrics/names'
+        'prometheus': 'metrics'
+      base-path: '/'
+  endpoint:
+    health:
+      show-details: ALWAYS
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
 application:
   security:
     jwt:
@@ -21,3 +66,6 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+
+server:
+  port: 8090

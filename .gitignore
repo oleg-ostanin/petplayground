@@ -43,6 +43,8 @@ bin/
 /docker/postgre/pgadmin-pet
 /docker/postgre/postgres-data-pet
 /docker/postgre/pgbackup
+/docker/postgre/grafana
+/docker/postgre/prometheus
 
 ### macos
 **/.DS_Store

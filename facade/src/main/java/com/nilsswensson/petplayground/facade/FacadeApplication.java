@@ -1,4 +1,4 @@
-package com.nilsswensson.petplayground.facade.security;
+package com.nilsswensson.petplayground.facade;
 
 import com.nilsswensson.petplayground.facade.security.auth.RegisterRequest;
 import com.nilsswensson.petplayground.facade.security.user.Role;
@@ -15,7 +15,7 @@ public class FacadeApplication {
 		SpringApplication.run(FacadeApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	public CommandLineRunner commandLineRunner(
 			AuthenticationService service
 	) {
@@ -27,7 +27,7 @@ public class FacadeApplication {
 					.password("password")
 					.role(Role.ADMIN)
 					.build();
-			System.out.println("Admin token: " + service.register(admin).getAccessToken());
+//			System.out.println("Admin token: " + service.register(admin).getAccessToken());
 
 			var manager = RegisterRequest.builder()
 					.firstname("Admin")
@@ -36,7 +36,7 @@ public class FacadeApplication {
 					.password("password")
 					.role(Role.MANAGER)
 					.build();
-			System.out.println("Manager token: " + service.register(manager).getAccessToken());
+//			System.out.println("Manager token: " + service.register(manager).getAccessToken());
 
 		};
 	}
