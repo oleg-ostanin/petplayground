@@ -2,6 +2,7 @@ package com.nilsswensson.petplayground.load.book;
 
 import com.nilsswensson.petplayground.common.auth.AuthenticationResponse;
 import com.nilsswensson.petplayground.common.model.Book;
+import com.nilsswensson.petplayground.load.client.FacadeRestFeignClient;
 import com.nilsswensson.petplayground.load.manager.ManagerService;
 import com.nilsswensson.petplayground.load.utils.BookUtils;
 import com.nilsswensson.petplayground.load.utils.WebUtils;
@@ -12,11 +13,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class BookService {
 
     private final ManagerService managerService;
     private final BookUtils bookUtils;
+    private final FacadeRestFeignClient restClient;
+
+    public BookService(ManagerService managerService, BookUtils bookUtils, FacadeRestFeignClient restClient) {
+        this.managerService = managerService;
+        this.bookUtils = bookUtils;
+        this.restClient = restClient;
+    }
 
     @Scheduled(fixedDelay = 10000000000L)
     public void addBook() {
@@ -25,7 +32,7 @@ public class BookService {
         final List<Book> allBooks = bookUtils.getAllBooks();
 
         for(Book book : allBooks) {
-            WebUtils.post(authenticationResponse, "/add-book", book);
+            restClient.addBook(book, "Bearer " + authenticationResponse.getAccessToken());
         }
     }
 }

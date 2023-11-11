@@ -19,18 +19,51 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-webflux"
 
-    implementation "org.springframework.retry:spring-retry"
+    implementation (enforcedPlatform(libs.spring.boot.bom)) {
+        exclude(group: "org.jooq", module: "jooq")
+        exclude(group: "org.apache.kafka", module: "kafka-clients")
+    }
 
-    implementation 'org.projectlombok:lombok:1.18.26'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    implementation(libs.spring.boot.starter.actuator)
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.security)
+    implementation(libs.spring.boot.starter.validation)
 
+    implementation(libs.sentry.spring.boot.starter)
+    implementation(libs.sentry.logback)
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
+    // SQL
+    implementation(libs.liquibase)
+    runtimeOnly(libs.postgresql)
 
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // Micrometer
+    implementation(libs.micrometer.registry.prometheus)
+    implementation(libs.micrometer.core)
+
+    developmentOnly(libs.spring.boot.devtools)
+    annotationProcessor(libs.spring.boot.configuration.processor)
+
+    // Feign
+    implementation(libs.feign.jackson)
+    implementation(libs.feign.okhttp)
+    implementation(libs.feign.micrometer)
+
+    // JWT
+    implementation(libs.jjwt.impl)
+    runtimeOnly(libs.jjwt.jackson)
+
+    // Open API
+    implementation(libs.springdoc.openapi.ui)
+
+    // Test
+    compileOnly(libs.lombok)
+    testCompileOnly(libs.lombok)
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.wiremock)
+    testImplementation(libs.testcontainers.junit.jupiter)
+
+    // ASSERTJ
+    testImplementation(libs.assertj)
 }
 
 apply plugin: "io.spring.dependency-management"

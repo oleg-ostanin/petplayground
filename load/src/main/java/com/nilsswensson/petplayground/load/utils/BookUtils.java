@@ -13,7 +13,7 @@ public class BookUtils {
     public BookUtils() {
         final List<Book> allBooksLocal = new ArrayList<>();
 
-        final Book book0 = Book.builder().title("Hate").build();
+        final Book book0 = Book.builder().title("Hate1").build();
         allBooksLocal.add(book0);
 
         this.allBooks = allBooksLocal;
