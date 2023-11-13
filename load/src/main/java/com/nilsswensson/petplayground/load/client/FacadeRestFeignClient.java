@@ -13,12 +13,16 @@ public interface FacadeRestFeignClient {
     @RequestLine("POST /add-book")
     @Headers({
             "Content-Type: application/json",
-            "Authorization: {token}"})
+            "Authorization: {token}"}
+    )
     @Timed
     void addBook(@RequestBody Book book, @Param("token") String token);
 
     @RequestLine("GET /book")
-    @Headers("Content-Type: application/json")
+    @Headers({
+            "Content-Type: application/json",
+            "Authorization: {token}"}
+    )
     @Timed
-    Book getBook();
+    Book getBook(@Param("token") String token);
 }

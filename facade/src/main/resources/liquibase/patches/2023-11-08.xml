@@ -14,7 +14,7 @@
                 first_name TEXT CHECK (char_length(first_name) <= 64),
                 last_name TEXT CHECK (char_length(last_name) <= 64),
                 role_name TEXT CHECK (char_length(last_name) <= 64),
-                email TEXT CHECK (char_length(email) <= 64),
+                email TEXT UNIQUE CHECK (char_length(email) <= 64),
                 password TEXT CHECK (char_length(password) <= 512)
                 );
             ]]>

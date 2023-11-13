@@ -55,6 +55,16 @@ dependencies {
     // Open API
     implementation(libs.springdoc.openapi.ui)
 
+    compileOnly 'org.projectlombok:lombok'
+
+    // SLF4J API
+    implementation 'org.slf4j:slf4j-api'
+
+    // SLF4J implementation (e.g., Logback)
+    implementation 'ch.qos.logback:logback-classic'
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     // Test
     compileOnly(libs.lombok)
     testCompileOnly(libs.lombok)

@@ -17,7 +17,7 @@ public class BookController {
     @Timed
     @GetMapping("/book")
     public ResponseEntity<Book> findBook() {
-        return ResponseEntity.ok(bookService.getByTitle("Hate"));
+        return ResponseEntity.ok(bookService.getByTitle("Hate1"));
     }
 
     @Timed

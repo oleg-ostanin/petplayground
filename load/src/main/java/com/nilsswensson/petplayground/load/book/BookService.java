@@ -7,11 +7,13 @@ import com.nilsswensson.petplayground.load.manager.ManagerService;
 import com.nilsswensson.petplayground.load.utils.BookUtils;
 import com.nilsswensson.petplayground.load.utils.WebUtils;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class BookService {
 
@@ -32,7 +34,16 @@ public class BookService {
         final List<Book> allBooks = bookUtils.getAllBooks();
 
         for(Book book : allBooks) {
-            restClient.addBook(book, "Bearer " + authenticationResponse.getAccessToken());
+            //restClient.addBook(book, "Bearer " + authenticationResponse.getAccessToken());
         }
+    }
+
+    @Scheduled(initialDelay = 2000L, fixedDelay = 5000L)
+    public void getBook() {
+        final AuthenticationResponse authenticationResponse = managerService.authenticate();
+
+        final Book book = restClient.getBook("Bearer " + authenticationResponse.getAccessToken());
+
+        log.info("Got book: {}", book.getTitle());
     }
 }
