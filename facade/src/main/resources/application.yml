@@ -6,7 +6,7 @@ spring:
     change-log: classpath:liquibase/changelog.xml
     enabled: ${LIQUIBASE_MIGRATION:true}
   datasource:
-    url: jdbc:postgresql://localhost:5432/playground
+    url: jdbc:postgresql://localhost:5439/playground
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver

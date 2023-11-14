@@ -32,11 +32,11 @@ public class BookService {
         final List<Book> allBooks = bookUtils.getAllBooks();
 
         for(Book book : allBooks) {
-            //restClient.addBook(book, "Bearer " + authenticationResponse.getAccessToken());
+            restClient.addBook(book, "Bearer " + authenticationResponse.getAccessToken());
         }
     }
 
-    @Scheduled(initialDelay = 2000L, fixedDelay = 5000L)
+    @Scheduled(initialDelay = 2000L, fixedDelay = 50000000000L)
     public void getBook() {
         final AuthenticationResponse authenticationResponse = managerService.authenticate();
 
