@@ -1,6 +1,6 @@
 package com.nilsswensson.petplayground.load.client;
 
-import com.nilsswensson.petplayground.common.model.Book;
+import com.nilsswensson.petplayground.common.model.book.Book;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;

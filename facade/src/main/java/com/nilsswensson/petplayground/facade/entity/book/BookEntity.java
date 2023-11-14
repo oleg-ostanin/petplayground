@@ -1,4 +1,4 @@
-package com.nilsswensson.petplayground.facade.entity;
+package com.nilsswensson.petplayground.facade.entity.book;
 
 import com.nilsswensson.petplayground.facade.security.token.Token;
 import com.nilsswensson.petplayground.facade.security.user.Role;

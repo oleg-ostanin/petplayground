@@ -1,6 +1,6 @@
 package com.nilsswensson.petplayground.facade.controller;
 
-import com.nilsswensson.petplayground.common.model.Book;
+import com.nilsswensson.petplayground.common.model.book.Book;
 import com.nilsswensson.petplayground.facade.service.BookService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;

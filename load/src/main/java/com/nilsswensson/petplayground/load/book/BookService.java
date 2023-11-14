@@ -1,12 +1,10 @@
 package com.nilsswensson.petplayground.load.book;
 
 import com.nilsswensson.petplayground.common.auth.AuthenticationResponse;
-import com.nilsswensson.petplayground.common.model.Book;
+import com.nilsswensson.petplayground.common.model.book.Book;
 import com.nilsswensson.petplayground.load.client.FacadeRestFeignClient;
 import com.nilsswensson.petplayground.load.manager.ManagerService;
 import com.nilsswensson.petplayground.load.utils.BookUtils;
-import com.nilsswensson.petplayground.load.utils.WebUtils;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

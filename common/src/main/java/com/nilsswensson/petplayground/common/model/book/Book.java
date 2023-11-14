@@ -1,4 +1,4 @@
-package com.nilsswensson.petplayground.common.model;
+package com.nilsswensson.petplayground.common.model.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

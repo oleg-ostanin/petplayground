@@ -1,6 +1,6 @@
 package com.nilsswensson.petplayground.load.utils;
 
-import com.nilsswensson.petplayground.common.model.Book;
+import com.nilsswensson.petplayground.common.model.book.Book;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
