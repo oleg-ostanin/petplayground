@@ -1,5 +1,6 @@
 package com.nilsswensson.petplayground.facade.entity.author;
 
+import com.nilsswensson.petplayground.facade.entity.book.BookEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Builder(toBuilder = true)
@@ -29,4 +31,7 @@ public class AuthorEntity {
 
   @Column(name = "date_of_birth")
   private LocalDateTime dateOfBirth;
+
+  @ManyToMany(mappedBy = "authors")
+  private Set<BookEntity> books;
 }
