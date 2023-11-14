@@ -10,4 +10,6 @@
 
     <include file="patches/2023-11-08.xml" relativeToChangelogFile="true"/>
     <include file="patches/2023-11-10.xml" relativeToChangelogFile="true"/>
+    <include file="patches/2023-11-14.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>

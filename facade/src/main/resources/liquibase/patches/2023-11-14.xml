@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id = "add-author-table" author="s.gorokhov">
+        <comment>add author table</comment>
+        <sql>
+            <![CDATA[
+            CREATE TABLE IF NOT EXISTS author (
+                id BIGSERIAL PRIMARY KEY,
+                first_name TEXT NOT NULL CHECK (char_length(first_name) <= 512),
+                last_name TEXT NOT NULL CHECK (char_length(last_name) <= 512),
+                date_of_birth DATE NOT NULL
+
+                );
+
+            ]]>
+
+        </sql>
+        <rollback>
+            DROP table author;
+        </rollback>
+    </changeSet>
+    <changeSet id = "add-author-book-table" author="s.gorokhov">
+        <comment>add author table</comment>
+        <sql>
+            <![CDATA[
+            CREATE TABLE IF NOT EXISTS author_book (
+                author_id INT,
+                book_id INT,
+                FOREIGN KEY (author_id) REFERENCES author (id),
+                FOREIGN KEY (book_id) REFERENCES book (id)
+                );
+
+            ]]>
+
+        </sql>
+        <rollback>
+            DROP table author_book;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
