@@ -1,6 +1,5 @@
-package com.nilsswensson.petplayground.facade.entity.author;
+package com.nilsswensson.petplayground.facade.entity;
 
-import com.nilsswensson.petplayground.facade.entity.book.BookEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
