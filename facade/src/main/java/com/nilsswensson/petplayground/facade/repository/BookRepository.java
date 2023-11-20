@@ -1,6 +1,6 @@
 package com.nilsswensson.petplayground.facade.repository;
 
-import com.nilsswensson.petplayground.facade.entity.book.BookEntity;
+import com.nilsswensson.petplayground.facade.entity.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

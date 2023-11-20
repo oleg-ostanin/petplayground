@@ -1,7 +1,7 @@
 package com.nilsswensson.petplayground.facade.service;
 
 import com.nilsswensson.petplayground.common.model.book.Book;
-import com.nilsswensson.petplayground.facade.entity.book.BookEntity;
+import com.nilsswensson.petplayground.facade.entity.BookEntity;
 import com.nilsswensson.petplayground.facade.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
