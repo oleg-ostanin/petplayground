@@ -1,6 +1,7 @@
 package com.nilsswensson.petplayground.load.book;
 
 import com.nilsswensson.petplayground.common.auth.AuthenticationResponse;
+import com.nilsswensson.petplayground.common.model.book.Author;
 import com.nilsswensson.petplayground.common.model.book.Book;
 import com.nilsswensson.petplayground.load.client.FacadeRestFeignClient;
 import com.nilsswensson.petplayground.load.manager.ManagerService;
@@ -43,5 +44,12 @@ public class BookService {
         final Book book = restClient.getBook("Bearer " + authenticationResponse.getAccessToken());
 
         log.info("Got book: {}", book.getTitle());
+    }
+
+    @Scheduled(initialDelay = 8000L, fixedDelay = 50000000000L)
+    public void attachAuthor() {
+        final AuthenticationResponse authenticationResponse = managerService.authenticate();
+        final Author author = restClient.getAuthor("Bearer " + authenticationResponse.getAccessToken());
+        restClient.attachAuthor(1L,author,"Bearer " + authenticationResponse.getAccessToken());
     }
 }

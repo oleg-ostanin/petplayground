@@ -1,5 +1,6 @@
 package com.nilsswensson.petplayground.facade.controller;
 
+import com.nilsswensson.petplayground.common.model.book.Author;
 import com.nilsswensson.petplayground.common.model.book.Book;
 import com.nilsswensson.petplayground.facade.service.BookService;
 import io.micrometer.core.annotation.Timed;
@@ -24,5 +25,11 @@ public class BookController {
     @PostMapping("/add-book")
     public void addBook(@RequestBody final Book book) {
         bookService.addBook(book);
+    }
+
+    @Timed
+    @PostMapping("/attach-author")
+    public void attachAuthor(Long bookId, @RequestBody final Author author) {
+        bookService.attachAuthor(bookId,author);
     }
 }
