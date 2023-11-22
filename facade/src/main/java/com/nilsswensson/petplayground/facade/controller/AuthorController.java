@@ -16,13 +16,13 @@ public class AuthorController {
 
     @Timed
     @GetMapping("/author")
-    public ResponseEntity<Author> findBook() {
+    public ResponseEntity<Author> getAuthor() {
         return ResponseEntity.ok(authorService.getAuthorByFirstnameAndLastname("Sergey", "Gorokhov"));
     }
 
     @Timed
     @PostMapping("/add-author")
-    public void addBook(@RequestBody final Author author) {
+    public void addAuthor(@RequestBody final Author author) {
         authorService.addAuthor(author);
     }
 }
