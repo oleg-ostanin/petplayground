@@ -11,8 +11,7 @@
             <![CDATA[
             CREATE TABLE IF NOT EXISTS book (
                 id BIGSERIAL PRIMARY KEY,
-                title TEXT UNIQUE CHECK (char_length(title) <= 512),
-                release_date TIMESTAMP WITH TIME ZONE
+                title TEXT UNIQUE CHECK (char_length(title) <= 512)
                 );
 
             ]]>

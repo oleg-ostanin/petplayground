@@ -24,9 +24,6 @@ public class BookEntity {
   @Column(name = "title")
   private String title;
 
-  @Column(name = "releaseDate")
-  private String releaseDate;
-
   @ManyToMany
   @JoinTable(
           name = "author_book",
