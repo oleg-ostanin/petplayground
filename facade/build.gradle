@@ -43,6 +43,9 @@ dependencies {
     implementation(libs.liquibase)
     runtimeOnly(libs.postgresql)
 
+    //Redis
+    implementation(libs.redisson)
+
     // Micrometer
     implementation(libs.micrometer.registry.prometheus)
     implementation(libs.micrometer.core)
