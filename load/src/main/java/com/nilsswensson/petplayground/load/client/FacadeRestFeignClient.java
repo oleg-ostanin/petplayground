@@ -1,5 +1,6 @@
 package com.nilsswensson.petplayground.load.client;
 
+import com.nilsswensson.petplayground.common.model.book.Author;
 import com.nilsswensson.petplayground.common.model.book.Book;
 import feign.Headers;
 import feign.Param;
@@ -25,4 +26,21 @@ public interface FacadeRestFeignClient {
     )
     @Timed
     Book getBook(@Param("token") String token);
+
+
+    @RequestLine("POST /add-author")
+    @Headers({
+            "Content-Type: application/json",
+            "Authorization: {token}"}
+    )
+    @Timed
+    void addAuthor(@RequestBody Author author, @Param("token") String token);
+
+    @RequestLine("GET /author")
+    @Headers({
+            "Content-Type: application/json",
+            "Authorization: {token}"}
+    )
+    @Timed
+    Author getAuthor(@Param("token") String token);
 }
