@@ -44,6 +44,6 @@ public class AuthorService {
 
         final Author author = restClient.getAuthor("Bearer " + authenticationResponse.getAccessToken());
 
-        log.info("Got book: {}", author.getFirstName()+" "+author.getLastName());
+        log.info("Got author: {}", author.getFirstName()+" "+author.getLastName());
     }
 }

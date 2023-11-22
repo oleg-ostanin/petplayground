@@ -12,7 +12,7 @@
             CREATE TABLE IF NOT EXISTS author (
                 id BIGSERIAL PRIMARY KEY,
                 first_name TEXT NOT NULL CHECK (char_length(first_name) <= 512),
-                last_name TEXT NOT NULL CHECK (char_length(last_name) <= 512),
+                last_name TEXT NOT NULL CHECK (char_length(last_name) <= 512)
 
                 );
 
