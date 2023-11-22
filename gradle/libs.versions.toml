@@ -16,6 +16,7 @@ testcontainers = "1.18.3"
 assertj = "3.24.2"
 jjwt = "0.11.5"
 springdoc-openapi-ui = "2.1.0"
+redisson = "3.20.0"
 
 [libraries]
 spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
@@ -36,6 +37,8 @@ sentry-spring-boot-starter = { module = "io.sentry:sentry-spring-boot-starter-ja
 
 liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
+redisson = { module = "org.redisson:redisson", version.ref = "redisson" }
 
 hibernate-validator = { module = "org.hibernate:hibernate-validator", version.ref = "hibernate-validator" }
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }

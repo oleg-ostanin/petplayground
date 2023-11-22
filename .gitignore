@@ -46,6 +46,7 @@ bin/
 /docker/postgre/pgbackup
 /docker/postgre/grafana
 /docker/postgre/prometheus
+/docker/postgre/redis
 
 ### macos
 **/.DS_Store
