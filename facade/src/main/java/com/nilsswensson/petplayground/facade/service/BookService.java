@@ -1,34 +1,25 @@
 package com.nilsswensson.petplayground.facade.service;
 
+import com.nilsswensson.petplayground.common.model.book.Author;
 import com.nilsswensson.petplayground.common.model.book.Book;
+import com.nilsswensson.petplayground.facade.entity.AuthorEntity;
 import com.nilsswensson.petplayground.facade.entity.BookEntity;
+import com.nilsswensson.petplayground.facade.repository.AuthorRepository;
 import com.nilsswensson.petplayground.facade.repository.BookRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RDeque;
-import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
-    private final RedissonClient redissonClient;
-
-
+    private final AuthorRepository authorRepository;
 
     public Book getByTitle(final String title) {
-        RDeque<String> deque = redissonClient.getDeque("test_deque");
-        deque.addFirst("A", "B", "C");
-        for (String letter: deque) {
-            log.info("letter: {}", letter);
-        }
-
-
         final Optional<BookEntity> bookEntity = bookRepository.findByTitle(title);
 
         if (bookEntity.isPresent()) {
@@ -38,15 +29,27 @@ public class BookService {
         throw new RuntimeException("Failed to find book by title " + title);
     }
 
-    @Transactional
     public void addBook(final Book book) {
-        final Optional<BookEntity> check = bookRepository.findByTitle(book.getTitle());
+        final BookEntity bookEntity = BookEntity.builder().title(book.getTitle()).build();
+        bookRepository.save(bookEntity);
+    }
 
-        if(check.isPresent()) {
+    public void attachAuthor(Long bookId, Author author) {
+        Optional<BookEntity> bookEntity = bookRepository.findById(bookId);
+        Optional<AuthorEntity> authorEntity = authorRepository.findByFirstNameAndLastName(author.getFirstName(), author.getLastName());
+
+        if(bookEntity.isPresent() && authorEntity.isPresent()) {
+            bookEntity.get().setAuthors(new HashSet<>(Set.of(authorEntity.get())));
+            //authorEntity.get().setBooks(new HashSet<>(Set.of(bookEntity.get())));
             return;
         }
 
-        final BookEntity bookEntity = BookEntity.builder().title(book.getTitle()).build();
-        bookRepository.save(bookEntity);
+        if(bookEntity.isEmpty()) {
+            throw new RuntimeException("Failed attach author to book because book with id " + bookId+" does`t exist");
+        }
+
+        if(authorEntity.isEmpty()) {
+            throw new RuntimeException("Failed attach author to book because author with name " + author.getFirstName()+" "+author.getLastName()+" does`t exist");
+        }
     }
 }

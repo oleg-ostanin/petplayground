@@ -43,4 +43,22 @@ public interface FacadeRestFeignClient {
     )
     @Timed
     Author getAuthor(@Param("token") String token);
+
+    @RequestLine("POST /attach-author")
+    @Headers({
+            "Content-Type: application/json",
+            "Authorization: {token}"}
+    )
+    @Timed
+    void attachAuthor(Long id, @RequestBody Author author, @Param("token") String token);
+
+
+
+
+
+
+
+
+
+
 }
