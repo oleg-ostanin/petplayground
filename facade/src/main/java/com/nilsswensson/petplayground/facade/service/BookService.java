@@ -8,6 +8,7 @@ import com.nilsswensson.petplayground.facade.repository.AuthorRepository;
 import com.nilsswensson.petplayground.facade.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -34,12 +35,15 @@ public class BookService {
         bookRepository.save(bookEntity);
     }
 
+    @Transactional
     public void attachAuthor(Long bookId, Author author) {
         Optional<BookEntity> bookEntity = bookRepository.findById(bookId);
         Optional<AuthorEntity> authorEntity = authorRepository.findByFirstNameAndLastName(author.getFirstName(), author.getLastName());
 
         if(bookEntity.isPresent() && authorEntity.isPresent()) {
-            bookEntity.get().setAuthors(new HashSet<>(Set.of(authorEntity.get())));
+            final BookEntity book = bookEntity.get();
+            book.setAuthors(new HashSet<>(Set.of(authorEntity.get())));
+            bookRepository.save(book);
             //authorEntity.get().setBooks(new HashSet<>(Set.of(bookEntity.get())));
             return;
         }

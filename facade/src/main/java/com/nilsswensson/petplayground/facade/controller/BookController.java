@@ -28,8 +28,8 @@ public class BookController {
     }
 
     @Timed
-    @PostMapping("/attach-author")
-    public void attachAuthor(Long bookId, @RequestBody final Author author) {
+    @PostMapping("/attach-author/book/{id}")
+    public void attachAuthor(@PathVariable("id") Long bookId, @RequestBody final Author author) {
         bookService.attachAuthor(bookId,author);
     }
 }
