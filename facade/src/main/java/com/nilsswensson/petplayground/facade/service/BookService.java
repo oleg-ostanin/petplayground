@@ -32,7 +32,12 @@ public class BookService {
 
     public void addBook(final Book book) {
         final BookEntity bookEntity = BookEntity.builder().title(book.getTitle()).build();
-        bookRepository.save(bookEntity);
+        Optional<BookEntity> existingBooks = bookRepository.findByTitle(book.getTitle());
+        if (existingBooks.isPresent()) {
+            throw new RuntimeException("A book with title " + book.getTitle() + " already exists.");
+        } else {
+            bookRepository.save(bookEntity);
+        }
     }
 
     @Transactional
