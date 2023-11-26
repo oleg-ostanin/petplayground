@@ -9,6 +9,7 @@ public class UriConstants {
     public static final String AUTH_URL = FACADE_URL + API_V1 + AUTH;
     public static final String REST = "/rest";
     public static final String REST_URL = FACADE_URL + API_V1 + REST;
+    public static final String WHO_AM_I = "/whoami";
 
 
 }

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +19,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
+import static com.nilsswensson.petplayground.common.util.StringConstants.UNKNOWN_USER;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -67,6 +72,22 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    public String whoami(final String email) {
+
+        final Optional<User> userOpt = repository.findByEmail(email);
+
+        if (userOpt.isEmpty()) {
+            log.info("Failed to find user by email {}", email);
+            return UNKNOWN_USER;
+        }
+
+        final User user = userOpt.get();
+
+        log.info("Found user by email {}: {} {}", email, user.getFirstname(), user.getLastname());
+
+        return user.getRole().name();
     }
 
     private void saveUserToken(User user, String jwtToken) {

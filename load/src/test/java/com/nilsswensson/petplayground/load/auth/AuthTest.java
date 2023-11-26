@@ -2,7 +2,7 @@ package com.nilsswensson.petplayground.load.auth;
 
 import com.nilsswensson.petplayground.common.auth.AuthenticationResponse;
 import com.nilsswensson.petplayground.common.auth.RegisterRequest;
-import com.nilsswensson.petplayground.common.model.Book;
+import com.nilsswensson.petplayground.common.model.book.Book;
 import com.nilsswensson.petplayground.common.user.Role;
 import com.nilsswensson.petplayground.load.utils.WebUtils;
 import com.nilsswensson.petplayground.load.utils.auth.AuthUtils;
@@ -26,8 +26,7 @@ public class AuthTest {
                 .role(Role.ADMIN)
                 .build();
 
-        final AuthenticationResponse response =
-                AuthUtils.token("/register", admin, "");
+        final AuthenticationResponse response = AuthUtils.register(admin);
 
         System.out.println(response.getAccessToken());
 

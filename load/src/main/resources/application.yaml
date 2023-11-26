@@ -1,2 +1,8 @@
 server:
   port: 9094
+
+integration:
+  auth-client:
+    url: http://localhost:9093/api/v1/auth
+  rest-client:
+    url: http://localhost:9093/api/v1/rest

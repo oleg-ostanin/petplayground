@@ -1,4 +1,4 @@
-package com.nilsswensson.petplayground.common.model;
+package com.nilsswensson.petplayground.common.model.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
-  public String title;
+public class Author {
+    private String firstName;
+    private String lastName;
+
+
 }

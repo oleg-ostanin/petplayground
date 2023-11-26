@@ -9,9 +9,9 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: playground
     ports:
-      - "5432:5432"
+      - "5439:5432"
     volumes:
-      - ./postgres-data-pet:/var/lib/postgresql/data
+      - ./postgres-pet-data:/var/lib/postgresql/data
   grafana:
     build: './config/grafana'
     ports:
@@ -38,5 +38,19 @@ services:
       monitoring:
         aliases:
           - prometheus
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass redis_admin
+    volumes:
+      - ./redis/data:/root/redis
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PASSWORD=redis_admin
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=16
 networks:
   monitoring:
