@@ -6,6 +6,7 @@ import com.nilsswensson.petplayground.facade.service.BookService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,13 +24,15 @@ public class BookController {
 
     @Timed
     @PostMapping("/add-book")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public void addBook(@RequestBody final Book book) {
         bookService.addBook(book);
     }
 
     @Timed
-    @PostMapping("/attach-author")
-    public void attachAuthor(Long bookId, @RequestBody final Author author) {
+    @PostMapping("/attach-author/book/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    public void attachAuthor(@PathVariable("id") Long bookId, @RequestBody final Author author) {
         bookService.attachAuthor(bookId,author);
     }
 }

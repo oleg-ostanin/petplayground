@@ -5,6 +5,7 @@ import com.nilsswensson.petplayground.facade.service.AuthorService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class AuthorController {
 
     @Timed
     @PostMapping("/add-author")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public void addAuthor(@RequestBody final Author author) {
         authorService.addAuthor(author);
     }

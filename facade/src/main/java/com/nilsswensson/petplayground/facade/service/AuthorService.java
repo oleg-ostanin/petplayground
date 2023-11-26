@@ -34,9 +34,12 @@ public class AuthorService {
                         .firstName(author.getFirstName())
                         .lastName(author.getLastName())
                         .build();
-        authorRepository.save(authorEntity);
+
+        Optional<AuthorEntity> existingBooks = authorRepository.findByFirstNameAndLastName(author.getFirstName(),author.getLastName());
+        if (existingBooks.isPresent()) {
+            throw new RuntimeException("A author with name " + author.getFirstName()+" " + author.getLastName() + " already exists.");
+        } else {
+            authorRepository.save(authorEntity);
+        }
     }
-
-
-
 }

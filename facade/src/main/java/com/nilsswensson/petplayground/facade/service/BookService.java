@@ -8,6 +8,7 @@ import com.nilsswensson.petplayground.facade.repository.AuthorRepository;
 import com.nilsswensson.petplayground.facade.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -31,15 +32,23 @@ public class BookService {
 
     public void addBook(final Book book) {
         final BookEntity bookEntity = BookEntity.builder().title(book.getTitle()).build();
-        bookRepository.save(bookEntity);
+        Optional<BookEntity> existingBooks = bookRepository.findByTitle(book.getTitle());
+        if (existingBooks.isPresent()) {
+            throw new RuntimeException("A book with title " + book.getTitle() + " already exists.");
+        } else {
+            bookRepository.save(bookEntity);
+        }
     }
 
+    @Transactional
     public void attachAuthor(Long bookId, Author author) {
         Optional<BookEntity> bookEntity = bookRepository.findById(bookId);
         Optional<AuthorEntity> authorEntity = authorRepository.findByFirstNameAndLastName(author.getFirstName(), author.getLastName());
 
         if(bookEntity.isPresent() && authorEntity.isPresent()) {
-            bookEntity.get().setAuthors(new HashSet<>(Set.of(authorEntity.get())));
+            final BookEntity book = bookEntity.get();
+            book.setAuthors(new HashSet<>(Set.of(authorEntity.get())));
+            bookRepository.save(book);
             //authorEntity.get().setBooks(new HashSet<>(Set.of(bookEntity.get())));
             return;
         }

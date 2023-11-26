@@ -44,13 +44,13 @@ public interface FacadeRestFeignClient {
     @Timed
     Author getAuthor(@Param("token") String token);
 
-    @RequestLine("POST /attach-author")
+    @RequestLine("POST /attach-author/book/{id}")
     @Headers({
             "Content-Type: application/json",
             "Authorization: {token}"}
     )
     @Timed
-    void attachAuthor(Long id, @RequestBody Author author, @Param("token") String token);
+    void attachAuthor(@Param("id") Long id, @RequestBody Author author, @Param("token") String token);
 
 
 
