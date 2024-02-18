@@ -7,6 +7,9 @@ import com.nilsswensson.petplayground.facade.entity.BookEntity;
 import com.nilsswensson.petplayground.facade.repository.AuthorRepository;
 import com.nilsswensson.petplayground.facade.repository.BookRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RDeque;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +17,26 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
+    private final RedissonClient redissonClient;
+
+
+
     public Book getByTitle(final String title) {
+        RDeque<String> deque = redissonClient.getDeque("test_deque");
+
+        deque.addFirst("A", "B", "C");
+        for (String letter: deque) {
+            //log.info("letter: {}", letter);
+        }
+
+
         final Optional<BookEntity> bookEntity = bookRepository.findByTitle(title);
 
         if (bookEntity.isPresent()) {

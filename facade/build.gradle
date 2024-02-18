@@ -72,6 +72,7 @@ dependencies {
     testImplementation(libs.wiremock)
     testImplementation(libs.testcontainers.junit.jupiter)
     testImplementation(libs.testcontainers.postgresql)
+    testImplementation(libs.testcontainers.redis)
     testImplementation(libs.testcontainers.testcontainers)
 
     // ASSERTJ

@@ -17,6 +17,7 @@ assertj = "3.24.2"
 jjwt = "0.11.5"
 springdoc-openapi-ui = "2.1.0"
 redisson = "3.20.0"
+testcontainers-redis = "2.0.1"
 
 [libraries]
 spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
@@ -52,6 +53,7 @@ feign-micrometer = { module = "io.github.openfeign:feign-micrometer", version.re
 
 testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
 testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+testcontainers-redis = { module = "com.redis:testcontainers-redis", version.ref = "testcontainers-redis" }
 testcontainers-testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 
 assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
