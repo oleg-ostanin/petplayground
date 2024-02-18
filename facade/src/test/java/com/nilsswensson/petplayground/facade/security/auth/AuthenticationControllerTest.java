@@ -3,6 +3,7 @@ package com.nilsswensson.petplayground.facade.security.auth;
 import com.nilsswensson.petplayground.common.auth.RegisterRequest;
 import com.nilsswensson.petplayground.common.token.Token;
 import com.nilsswensson.petplayground.common.user.Role;
+import com.redis.testcontainers.RedisContainer;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,8 +19,10 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -112,6 +115,11 @@ class AuthenticationControllerTest {
         registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
         registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
         registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+
+        redisContainer.start();
+        registry.add("redis.redisson.testing", () -> true);
+        registry.add("redis.redisson.exposed-test-port", () -> redisContainer.getMappedPort(6379));
+        registry.add("redis.cluster.nodes", () -> redisContainer.getRedisURI());
     }
 
     @Container
@@ -120,4 +128,18 @@ class AuthenticationControllerTest {
             .withUsername("postgres")
             .withPassword("postgres")
             .withStartupTimeout(Duration.ofSeconds(180));
+
+    @Container
+    public static RedisContainer redisContainer =
+            new RedisContainer(DockerImageName.parse("bitnami/redis-cluster:7.0.10"))
+                    .withEnv(Map.of(
+                            "REDIS_PASSWORD", "bitnami",
+                            "REDISCLI_AUTH", "bitnami",
+                            "REDIS_CLUSTER_REPLICAS", "0",
+                            "REDIS_NODES", "127.0.0.1 127.0.0.1 127.0.0.1",
+                            "REDIS_CLUSTER_CREATOR", "yes",
+                            "REDIS_CLUSTER_DYNAMIC_IPS", "no",
+                            "REDIS_CLUSTER_ANNOUNCE_IP", "127.0.0.1",
+                            "TESTCONTAINERS_HOST_OVERRIDE", "localhost"))
+                    .withStartupTimeout(Duration.ofSeconds(10));
 }
