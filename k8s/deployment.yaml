@@ -23,3 +23,8 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432
+        - name: nilspet-redis
+          image: nilspet-redis:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379

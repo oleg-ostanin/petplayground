@@ -24,7 +24,18 @@ public class BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
+    private final RedissonClient redissonClient;
+
+
+
     public Book getByTitle(final String title) {
+        RDeque<String> deque = redissonClient.getDeque("test_deque");
+
+        deque.addFirst("A", "B", "C");
+        for (String letter: deque) {
+            //log.info("letter: {}", letter);
+        }
+
 
         final Optional<BookEntity> bookEntity = bookRepository.findByTitle(title);
 
