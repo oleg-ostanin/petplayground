@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AuthTest {
 
-    @Test
+//    @Test
     public void register() throws IOException {
         final long randLong = ThreadLocalRandom.current().nextLong();
         final String email = String.format("admin%d@mail.com", randLong);

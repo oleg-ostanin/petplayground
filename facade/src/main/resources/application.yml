@@ -1,12 +1,12 @@
 server:
-  port : 9093
+  port : 8080
 
 spring:
   liquibase:
     change-log: classpath:liquibase/changelog.xml
     enabled: ${LIQUIBASE_MIGRATION:true}
   datasource:
-    url: jdbc:postgresql://localhost:5439/playground
+    url: jdbc:postgresql://localhost:5432/playground
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver

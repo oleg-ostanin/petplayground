@@ -14,27 +14,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
     @Bean
-    @ConfigurationProperties("application.integration.redisson")
-    public RedissonProperties redissonProperties() {
-        return new RedissonProperties();
-    }
-
-    @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = JsonMapper.builder()
                 .addModule(new JavaTimeModule())
                 .build();
 
         return mapper;
-    }
-
-    @Bean
-    public RedissonClient redissonClient(RedissonProperties redissonProperties) {
-        Config config = new Config();
-        config.useSingleServer()
-                .setAddress(redissonProperties.getUrl())
-                .setPassword(redissonProperties.getPassword());
-
-        return Redisson.create(config);
     }
 }

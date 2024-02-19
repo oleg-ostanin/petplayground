@@ -48,6 +48,8 @@ bin/
 /docker/postgre/prometheus
 /docker/postgre/redis
 
+facade/docker/*.jar
+
 ### macos
 **/.DS_Store
 
