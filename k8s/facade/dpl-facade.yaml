@@ -16,5 +16,8 @@ spec:
         - name: nilspet-facade
           image: nilspet-facade:latest
           imagePullPolicy: IfNotPresent
+          env:
+          - name: TEST_NILS_VAR
+            value: "tnv"
           ports:
             - containerPort: 8080
