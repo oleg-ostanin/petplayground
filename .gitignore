@@ -49,6 +49,7 @@ bin/
 /docker/postgre/redis
 
 facade/docker/*.jar
+load/docker/*.jar
 
 ### macos
 **/.DS_Store

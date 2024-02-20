@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-nilspet-load
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dpl-nilspet-load
+  template:
+    metadata:
+      labels:
+        app: dpl-nilspet-load
+    spec:
+      containers:
+        - name: nilspet-load
+          image: nilspet-load:latest
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: TEST_NILS_VAR
+            value: "tnv"
+          ports:
+            - containerPort: 8090
