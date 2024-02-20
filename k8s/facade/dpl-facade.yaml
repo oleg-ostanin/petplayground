@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-nilspet-facade
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dpl-nilspet-facade
+  template:
+    metadata:
+      labels:
+        app: dpl-nilspet-facade
+    spec:
+      containers:
+        - name: nilspet-facade
+          image: nilspet-facade:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

@@ -6,7 +6,7 @@ spring:
     change-log: classpath:liquibase/changelog.xml
     enabled: ${LIQUIBASE_MIGRATION:true}
   datasource:
-    url: jdbc:postgresql://localhost:5432/playground
+    url: jdbc:postgresql://192.168.49.2:30007/playground
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -74,5 +74,5 @@ application:
         expiration: 604800000 # 7 days
   integration:
     redisson:
-      url: redis://127.0.0.1:6379
+      url: redis://192.168.49.2:30009
       password: redis_admin

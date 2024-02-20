@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-nilspet-psql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dpl-nilspet-psql
+  template:
+    metadata:
+      labels:
+        app: dpl-nilspet-psql
+    spec:
+      containers:
+        - name: nilspet-postgresql
+          image: nilspet-postgresql:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
