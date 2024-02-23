@@ -20,4 +20,4 @@ spec:
           - name: TEST_NILS_VAR
             value: "tnv"
           ports:
-            - containerPort: 8090
+            - containerPort: 8080

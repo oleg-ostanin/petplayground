@@ -38,7 +38,7 @@ public class AuthorService {
         }
     }
 
-    @Scheduled(initialDelay = 6000L, fixedDelay = 50000000000L)
+    //@Scheduled(initialDelay = 6000L, fixedDelay = 50000000000L)
     public void getBook() {
         final AuthenticationResponse authenticationResponse = managerService.authenticate();
 

@@ -14,6 +14,8 @@ minikube image rm --force 'nilspet-load'
 
 docker images
 
+cd $PROJECT_DIR/load
+
 gradle clean build
 
 cd $PROJECT_DIR/load/docker

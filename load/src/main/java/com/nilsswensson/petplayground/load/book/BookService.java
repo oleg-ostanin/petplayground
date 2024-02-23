@@ -26,7 +26,7 @@ public class BookService {
         this.restClient = restClient;
     }
 
-    @Scheduled(fixedDelay = 10000000000L)
+    //@Scheduled(fixedDelay = 10000000000L)
     public void addBook() {
         final AuthenticationResponse authenticationResponse = managerService.authenticate();
 
@@ -37,7 +37,7 @@ public class BookService {
         }
     }
 
-    @Scheduled(initialDelay = 2000L, fixedDelay = 50000000000L)
+    //@Scheduled(initialDelay = 2000L, fixedDelay = 50000000000L)
     public void getBook() {
         final AuthenticationResponse authenticationResponse = managerService.authenticate();
 
@@ -46,7 +46,7 @@ public class BookService {
         log.info("Got book: {}", book.getTitle());
     }
 
-    @Scheduled(initialDelay = 8000L, fixedDelay = 50000000000L)
+    //@Scheduled(initialDelay = 8000L, fixedDelay = 50000000000L)
     public void attachAuthor() {
         final AuthenticationResponse authenticationResponse = managerService.authenticate();
         final Author author = restClient.getAuthor("Bearer " + authenticationResponse.getAccessToken());
