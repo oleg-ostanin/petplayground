@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/rest")
 @RequiredArgsConstructor
@@ -20,6 +22,12 @@ public class BookController {
     @GetMapping("/book")
     public ResponseEntity<Book> findBook() {
         return ResponseEntity.ok(bookService.getByTitle("Hate1"));
+    }
+
+    @Timed
+    @GetMapping("/books")
+    public ResponseEntity<List<Book>> findBooks() {
+        return ResponseEntity.ok(bookService.findAll());
     }
 
     @Timed

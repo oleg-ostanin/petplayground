@@ -22,6 +22,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
+        log.info("Trying to register user with email {}", request.getEmail());
         return ResponseEntity.ok(service.register(request));
     }
 
@@ -29,6 +30,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
+        log.info("Trying to authenticate user with email {}", request.getEmail());
         return ResponseEntity.ok(service.authenticate(request));
     }
 

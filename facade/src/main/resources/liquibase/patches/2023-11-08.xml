@@ -33,8 +33,9 @@
                 expired BOOLEAN NOT NULL,
                 revoked BOOLEAN NOT NULL,
                 user_id BIGINT,
-                token TEXT CHECK (char_length(token) <= 255) UNIQUE,
+                token TEXT CHECK (char_length(token) <= 255),
                 token_type TEXT CHECK (char_length(token_type) <= 255),
+                UNIQUE (expired, revoked, token),
                 CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user_info(id)
 --                 CONSTRAINT token_token_type_check CHECK ((token_type)::text = 'BEARER'::text)
                 );

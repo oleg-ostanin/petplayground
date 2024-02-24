@@ -5,6 +5,7 @@ import com.nilsswensson.petplayground.common.model.book.Book;
 import com.nilsswensson.petplayground.facade.entity.AuthorEntity;
 import com.nilsswensson.petplayground.facade.entity.BookEntity;
 import com.nilsswensson.petplayground.facade.repository.AuthorRepository;
+import com.nilsswensson.petplayground.facade.repository.BookMapper;
 import com.nilsswensson.petplayground.facade.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,11 +24,14 @@ import java.util.Set;
 @AllArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
     private final AuthorRepository authorRepository;
 
     private final RedissonClient redissonClient;
 
-
+    public List<Book> findAll() {
+        return bookMapper.fromEntities(bookRepository.findAll());
+    }
 
     public Book getByTitle(final String title) {
         RDeque<String> deque = redissonClient.getDeque("test_deque");
@@ -50,7 +55,7 @@ public class BookService {
         final BookEntity bookEntity = BookEntity.builder().title(book.getTitle()).build();
         Optional<BookEntity> existingBooks = bookRepository.findByTitle(book.getTitle());
         if (existingBooks.isPresent()) {
-            throw new RuntimeException("A book with title " + book.getTitle() + " already exists.");
+            log.warn("A book with title " + book.getTitle() + " already exists.");
         } else {
             bookRepository.save(bookEntity);
         }

@@ -27,7 +27,7 @@ public class BookService {
     }
 
     //@Scheduled(fixedDelay = 10000000000L)
-    public void addBook() {
+    public void addBookOld() {
         final AuthenticationResponse authenticationResponse = managerService.authenticate();
 
         final List<Book> allBooks = bookUtils.getAllBooks();
@@ -37,13 +37,20 @@ public class BookService {
         }
     }
 
+    public void addBook(Book book) {
+        restClient.addBook(book, token());
+    }
+
     //@Scheduled(initialDelay = 2000L, fixedDelay = 50000000000L)
     public void getBook() {
-        final AuthenticationResponse authenticationResponse = managerService.authenticate();
 
-        final Book book = restClient.getBook("Bearer " + authenticationResponse.getAccessToken());
+        final Book book = restClient.getBook(token());
 
         log.info("Got book: {}", book.getTitle());
+    }
+
+    public List<Book> getBooks() {
+        return restClient.getBooks(token());
     }
 
     //@Scheduled(initialDelay = 8000L, fixedDelay = 50000000000L)
@@ -52,4 +59,9 @@ public class BookService {
         final Author author = restClient.getAuthor("Bearer " + authenticationResponse.getAccessToken());
         restClient.attachAuthor(1L,author,"Bearer " + authenticationResponse.getAccessToken());
     }
+
+    private String token() {
+        return managerService.token();
+    }
+
 }

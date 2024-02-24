@@ -8,6 +8,8 @@ import feign.RequestLine;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 
 public interface FacadeRestFeignClient {
 
@@ -26,6 +28,14 @@ public interface FacadeRestFeignClient {
     )
     @Timed
     Book getBook(@Param("token") String token);
+
+    @RequestLine("GET /books")
+    @Headers({
+            "Content-Type: application/json",
+            "Authorization: {token}"}
+    )
+    @Timed
+    List<Book> getBooks(@Param("token") String token);
 
 
     @RequestLine("POST /add-author")

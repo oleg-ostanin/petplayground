@@ -27,7 +27,7 @@ public class AuthorService {
     }
 
 
-    @Scheduled(initialDelay = 4000L,fixedDelay = 10000000000L)
+    //@Scheduled(initialDelay = 4000L,fixedDelay = 10000000000L)
     public void addAuthor() {
         final AuthenticationResponse authenticationResponse = managerService.authenticate();
 
