@@ -1,9 +1,6 @@
 package com.nilsswensson.petplayground.facade.security.auth;
 
 import com.nilsswensson.petplayground.facade.security.config.JwtService;
-import com.nilsswensson.petplayground.facade.security.token.Token;
-import com.nilsswensson.petplayground.facade.security.token.TokenRepository;
-import com.nilsswensson.petplayground.facade.security.token.TokenType;
 import com.nilsswensson.petplayground.facade.security.user.User;
 import com.nilsswensson.petplayground.facade.security.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +29,6 @@ public class AuthenticationService {
 
 
     private final UserRepository repository;
-    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -53,8 +49,6 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
 
-        log.info("Trying to save token for user {}", request.getEmail());
-        saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
@@ -72,12 +66,6 @@ public class AuthenticationService {
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
-
-        log.info("Trying to revoke all tokens for user {}", request.getEmail());
-        revokeAllUserTokens(user);
-
-        log.info("Trying to save token for user {}", request.getEmail());
-        saveUserToken(user, jwtToken);
 
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
@@ -101,29 +89,6 @@ public class AuthenticationService {
         return user.getRole().name();
     }
 
-    private void saveUserToken(User user, String jwtToken) {
-        var token = Token.builder()
-                .user(user)
-                .token(jwtToken)
-                .tokenType(TokenType.BEARER)
-                .expired(false)
-                .revoked(false)
-                .build();
-        tokenRepository.save(token);
-    }
-
-    private void revokeAllUserTokens(User user) {
-        List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
-        if (validUserTokens.isEmpty()) {
-            return;
-        }
-        validUserTokens.forEach(token -> {
-            token.setExpired(true);
-            token.setRevoked(true);
-        });
-        tokenRepository.saveAll(validUserTokens);
-    }
-
     public void refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
@@ -141,8 +106,6 @@ public class AuthenticationService {
                     .orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
-                revokeAllUserTokens(user);
-                saveUserToken(user, accessToken);
                 var authResponse = AuthenticationResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
