@@ -1,8 +1,9 @@
-package com.nilsswensson.petplayground.load.controller;
+package com.nilsswensson.petplayground.facade.controller;
 
 import com.nilsswensson.petplayground.common.model.book.Author;
 import com.nilsswensson.petplayground.common.model.book.Book;
-import com.nilsswensson.petplayground.load.book.BookService;
+import com.nilsswensson.petplayground.facade.service.BookService;
+import com.nilsswensson.petplayground.facade.service.UserService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 public class PokeController {
 
     private final BookService bookService;
+    private final UserService userService;
     @Timed
     @GetMapping()
     public ResponseEntity<Author> poke() {
@@ -25,19 +27,13 @@ public class PokeController {
     @Timed
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getBooks() {
-        return ResponseEntity.ok(bookService.getBooks());
+        return ResponseEntity.ok(bookService.findAll());
     }
 
     @Timed
     @PostMapping("/add-book")
     public ResponseEntity<List<Book>> addBook(@RequestBody Book book) {
         bookService.addBook(book);
-        return ResponseEntity.ok(bookService.getBooks());
-    }
-
-    @Timed
-    @GetMapping("/users")
-    public ResponseEntity<List<Book>> getUsers() {
-        return ResponseEntity.ok(bookService.getBooks());
+        return ResponseEntity.ok(bookService.findAll());
     }
 }

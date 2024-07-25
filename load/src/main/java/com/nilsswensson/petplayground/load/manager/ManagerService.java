@@ -21,6 +21,7 @@ public class ManagerService {
             .firstname("Default")
             .lastname("Manager")
             .email(DEFAULT_MANAGER_EMAIL)
+            .phone(DEFAULT_MANAGER_PHONE)
             .password(DEFAULT_MANAGER_PASSWORD)
             .role(Role.MANAGER)
             .build();

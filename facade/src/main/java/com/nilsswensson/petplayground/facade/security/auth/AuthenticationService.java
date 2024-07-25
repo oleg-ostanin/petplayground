@@ -40,6 +40,7 @@ public class AuthenticationService {
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
+                .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();

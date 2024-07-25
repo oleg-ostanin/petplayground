@@ -50,7 +50,8 @@ public class SecurityConfiguration {
                 "/webjars/**",
                 "/swagger-ui.html",
                 "/metrics",
-                "/poke"
+                "/poke",
+                "/poke/**"
         )
           .permitAll()
 
