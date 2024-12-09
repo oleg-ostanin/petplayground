@@ -54,8 +54,8 @@ class AuthenticationControllerTest {
         this.mvc.perform(get("/api/v1/rest/book")).andExpect(status().isForbidden());
     }
 
-//    @Test
-//    @Order(20)
+    @Test
+    @Order(20)
     void register() throws Exception {
         final long randLong = ThreadLocalRandom.current().nextLong();
         final String email = String.format("admin%d@mail.com", randLong);
